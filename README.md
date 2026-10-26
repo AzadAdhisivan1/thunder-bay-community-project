@@ -40,12 +40,12 @@ Tick a box in your PR when your task is done.
 **Your files:** `backend/seed/data/`, `frontend/src/components/ResultsMap.jsx`, `docs/backlog.md`
 
 ### Santhosh
-- [ ] `GET /api/categories`: only categories that have services (US-02)
-- [ ] `GET /api/services?category=<slug>` (US-02)
-- [ ] `GET /api/search?q=<text>`: matches name, category and description (US-03)
-- [ ] `GET /api/services/{id}` with 404 "Service not found" (US-04 API)
-- [ ] pytest tests for every endpoint, including the P1 acceptance criteria for US-03
-- [ ] **Report:** testing plan and test results in `docs/testing-plan.md` (P2.3)
+- [x] `GET /api/categories`: only categories that have services (US-02)
+- [x] `GET /api/services?category=<slug>` (US-02)
+- [x] `GET /api/search?q=<text>`: matches name, category and description (US-03)
+- [x] `GET /api/services/{id}` with 404 "Service not found" (US-04 API)
+- [x] pytest tests for every endpoint, including the P1 acceptance criteria for US-03
+- [x] **Report:** testing plan and test results in `docs/testing-plan.md` (P2.3)
 
 **Your files:** `backend/app/routers/`, `backend/app/crud/`, `backend/tests/`, `docs/testing-plan.md`
 
