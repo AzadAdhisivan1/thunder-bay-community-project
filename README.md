@@ -31,13 +31,13 @@ Tick a box in your PR when your task is done.
 **Your files:** `docker-compose.yml`, `.github/`, `backend/app/models/`, `backend/alembic/`, `backend/seed/seed.py`, `docs/architecture.md`
 
 ### Dhara
-- [ ] Collect around 50 checked Thunder Bay services into `backend/seed/data/services.csv` (US-01)
-- [ ] Geocode each address once with Nominatim and save lat/lng in the CSV (don't geocode on every run)
-- [ ] Leaflet map with OSM tiles, one marker per result, popup with name and link to details (US-05)
-- [ ] Tests for the map component
-- [ ] **Report:** updated product backlog in `docs/backlog.md` (P2.5)
+- [x] Collect around 50 checked Thunder Bay services into `backend/seed/data/services.csv` (US-01)
+- [x] Geocode each address once with Nominatim and save lat/lng in the CSV (don't geocode on every run)
+- [x] Leaflet map with OSM tiles, one marker per result, popup with name and link to details (US-05)
+- [x] Tests for the map component
+- [x] **Report:** updated product backlog in `docs/backlog.md` (P2.5)
 
-**Your files:** `backend/seed/data/`, `frontend/src/components/ResultsMap.jsx`, `docs/backlog.md`
+**Your files:** `backend/seed/data/`, `backend/seed/geocode.py`, `frontend/src/components/ResultsMap.jsx`, `docs/backlog.md`
 
 ### Santhosh
 - [x] `GET /api/categories`: only categories that have services (US-02)
@@ -89,6 +89,12 @@ Load the service data (once the seed script is written):
 
 ```bash
 docker compose exec backend python -m seed.seed
+```
+
+The coordinates are already saved in `services.csv`. After adding new services to the CSV, fill in their coordinates once with:
+
+```bash
+docker compose exec backend python -m seed.geocode
 ```
 
 Stop everything with `Ctrl+C`, or `docker compose down`. Add `-v` to also wipe the database.
