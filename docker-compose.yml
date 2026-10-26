@@ -1,0 +1,50 @@
+# Runs the whole app locally (NFR-06):  docker compose up --build
+#   Frontend: http://localhost:5173
+#   API docs: http://localhost:8000/docs
+
+services:
+  db:
+    image: postgis/postgis:16-3.4
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-thunderlink}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-thunderlink}
+      POSTGRES_DB: ${POSTGRES_DB:-thunderlink}
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-thunderlink}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  backend:
+    build: ./backend
+    environment:
+      DATABASE_URL: postgresql+psycopg://${POSTGRES_USER:-thunderlink}:${POSTGRES_PASSWORD:-thunderlink}@db:5432/${POSTGRES_DB:-thunderlink}
+      CORS_ORIGINS: http://localhost:5173
+      WATCHFILES_FORCE_POLLING: "true"
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
+    depends_on:
+      db:
+        condition: service_healthy
+
+  frontend:
+    build: ./frontend
+    environment:
+      VITE_API_PROXY_TARGET: http://backend:8000
+      VITE_USE_POLLING: "true"
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    depends_on:
+      - backend
+
+volumes:
+  pgdata:

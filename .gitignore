@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Node
+node_modules/
+dist/
+coverage/
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+
+# ML artifacts (large model files stay out of git)
+ml/models/
+*.pkl
+*.joblib
+
+# Editors and OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
