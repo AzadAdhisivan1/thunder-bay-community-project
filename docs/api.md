@@ -39,6 +39,13 @@ Every endpoint that returns services uses this shape:
 
 ### Errors
 
-- Empty `q` on `/api/search` → `422`
+- Missing, empty, or whitespace-only `q` on `/api/search` → `422`
 - Unknown service id → `404 {"detail": "Service not found"}`
-- Endpoint not written yet → `501`
+- Non-integer service id → `422`
+
+### Matching and ordering
+
+- Categories and services are returned by name, then id for stable ordering. Empty categories are omitted.
+- Category filtering uses the exact category slug; an unknown or empty slug returns `[]`.
+- Search trims surrounding whitespace and matches a case-insensitive literal substring in the service name, category name, or description. A multiword query such as `food bank` matches that phrase within any one field.
+- `%`, `_`, and `/` in search input are literal characters, not SQL wildcards. Null descriptions do not prevent matches in the other fields. A service matching multiple fields appears only once.
