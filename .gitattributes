@@ -1,0 +1,5 @@
+# Keep LF line endings in the repo so shell scripts work in Docker on every OS.
+* text=auto eol=lf
+*.pdf binary
+*.png binary
+*.jpg binary
