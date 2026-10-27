@@ -25,7 +25,7 @@ Tick a box in your PR when your task is done.
 - [x] PR template, contributing guide
 - [ ] Branch protection on `main` (1 approval + CI must pass)
 - [x] Database schema for services and categories (US-01), shared with Dhara
-- [ ] Seed script `backend/seed/seed.py` that loads the CSV without duplicates (US-01), shared with Dhara
+- [x] Seed script `backend/seed/seed.py` that loads the CSV without duplicates (US-01), shared with Dhara
 - [ ] **Report:** architecture diagram and design notes in `docs/architecture.md` (P2.2)
 
 **Your files:** `docker-compose.yml`, `.github/`, `backend/app/models/`, `backend/alembic/`, `backend/seed/seed.py`, `docs/architecture.md`
@@ -85,11 +85,13 @@ docker compose up --build
 - API and interactive docs: http://localhost:8000/docs
 - Health check: http://localhost:8000/api/health
 
-Load the service data (once the seed script is written):
+Load the 50 Thunder Bay services into the database (run this once after the first start, and again whenever `services.csv` changes):
 
 ```bash
 docker compose exec backend python -m seed.seed
 ```
+
+It's safe to run more than once: new services are added, changed ones are updated, and nothing is duplicated. It prints what it did, e.g. `categories created: 10, services created: 50, updated: 0, unchanged: 0`.
 
 The coordinates are already saved in `services.csv`. After adding new services to the CSV, fill in their coordinates once with:
 
