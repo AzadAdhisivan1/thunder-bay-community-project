@@ -26,7 +26,7 @@ Tick a box in your PR when your task is done.
 - [ ] Branch protection on `main` (1 approval + CI must pass)
 - [x] Database schema for services and categories (US-01), shared with Dhara
 - [x] Seed script `backend/seed/seed.py` that loads the CSV without duplicates (US-01), shared with Dhara
-- [ ] **Report:** architecture diagram and design notes in `docs/architecture.md` (P2.2)
+- [x] **Report:** architecture diagram and design notes in `docs/architecture.md` (P2.2)
 
 **Your files:** `docker-compose.yml`, `.github/`, `backend/app/models/`, `backend/alembic/`, `backend/seed/seed.py`, `docs/architecture.md`
 
