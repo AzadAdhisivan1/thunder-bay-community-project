@@ -14,6 +14,8 @@ export const THUNDER_BAY_CENTER = [48.3809, -89.2477]
 const DEFAULT_ZOOM = 12
 
 // Vite renames Leaflet's marker images, so point the default icon at the bundled files.
+// Without the delete, Leaflet prefixes its own image folder and the icon URLs break.
+delete L.Icon.Default.prototype._getIconUrl
 L.Icon.Default.mergeOptions({
   iconUrl: markerIcon,
   iconRetinaUrl: markerIcon2x,
