@@ -50,11 +50,11 @@ Tick a box in your PR when your task is done.
 **Your files:** `backend/app/routers/`, `backend/app/crud/`, `backend/tests/`, `docs/testing-plan.md`
 
 ### Kamakshi
-- [ ] Home page category list that links to results (US-02)
-- [ ] Search bar: empty input isn't sent, shows a "no results" message with a link to categories (US-03)
-- [ ] Results page list using `ServiceCard` (US-02, US-03)
-- [ ] Service details page: "Not available" for missing fields, "Service not found" for removed ones (US-04)
-- [ ] Vitest tests for the pages and components
+- [x] Home page category list that links to results (US-02)
+- [x] Search bar: empty input isn't sent, shows a "no results" message with a link to categories (US-03)
+- [x] Results page list using `ServiceCard` (US-02, US-03)
+- [x] Service details page: "Not available" for missing fields, "Service not found" for removed ones (US-04)
+- [x] Vitest tests for the pages and components
 - [ ] **Report:** implementation summary (report §2)
 
 **Your files:** `frontend/src/pages/`, `frontend/src/components/` (except `ResultsMap.jsx`), `frontend/tests/`
