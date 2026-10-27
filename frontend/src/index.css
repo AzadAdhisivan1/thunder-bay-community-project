@@ -7,6 +7,7 @@ body {
   font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   color: #1f2933;
   background: #f7f9fb;
+  line-height: 1.5;
 }
 
 .app-header {
@@ -26,4 +27,204 @@ body {
   max-width: 1100px;
   margin: 0 auto;
   padding: 16px;
+}
+
+h1 {
+  font-size: 1.5rem;
+  line-height: 1.25;
+  margin: 8px 0 16px;
+  overflow-wrap: anywhere;
+}
+
+h2 {
+  font-size: 1.15rem;
+  margin: 24px 0 12px;
+}
+
+a {
+  color: #1d4e89;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible {
+  outline: 3px solid #f4a261;
+  outline-offset: 2px;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* Loading, empty and error messages */
+.status {
+  margin: 12px 0;
+  color: #52606d;
+}
+
+.status-error {
+  color: #b42318;
+}
+
+/* Search bar (US-03) */
+.search-bar {
+  margin-bottom: 16px;
+}
+
+.search-bar label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.search-row {
+  display: flex;
+  gap: 8px;
+}
+
+.search-row input {
+  flex: 1;
+  min-width: 0;
+  padding: 10px 12px;
+  font-size: 1rem;
+  border: 1px solid #9aa5b1;
+  border-radius: 6px;
+}
+
+.search-row button {
+  padding: 10px 16px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+  background: #1d3557;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.search-row button:hover {
+  background: #274b7a;
+}
+
+/* Category list (US-02) */
+.category-grid {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 10px;
+}
+
+.category-link {
+  display: block;
+  padding: 14px 12px;
+  background: #fff;
+  border: 1px solid #d9e2ec;
+  border-radius: 8px;
+  font-weight: 600;
+  text-decoration: none;
+  overflow-wrap: anywhere;
+}
+
+.category-link:hover {
+  border-color: #1d4e89;
+  background: #eef4fb;
+}
+
+/* Results page (US-02, US-03) */
+.results-layout {
+  display: grid;
+  gap: 16px;
+}
+
+.results-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 10px;
+}
+
+.results-map-wrap {
+  min-width: 0;
+}
+
+@media (min-width: 800px) {
+  .results-layout {
+    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+    align-items: start;
+  }
+
+  .results-map-wrap {
+    position: sticky;
+    top: 16px;
+  }
+}
+
+/* Service card */
+.service-card {
+  padding: 12px 14px;
+  background: #fff;
+  border: 1px solid #d9e2ec;
+  border-radius: 8px;
+  overflow-wrap: anywhere;
+}
+
+.service-card-name {
+  margin: 0 0 4px;
+  font-size: 1.05rem;
+}
+
+.service-card-category {
+  display: inline-block;
+  margin: 0 0 6px;
+  padding: 1px 8px;
+  font-size: 0.85rem;
+  color: #1d3557;
+  background: #e3ecf7;
+  border-radius: 999px;
+}
+
+.service-card-address {
+  margin: 0 0 8px;
+  color: #52606d;
+}
+
+.service-card-link {
+  font-weight: 600;
+}
+
+/* Service details page (US-04) */
+.details-list {
+  margin: 0 0 20px;
+  padding: 4px 16px;
+  background: #fff;
+  border: 1px solid #d9e2ec;
+  border-radius: 8px;
+}
+
+.detail-row {
+  padding: 10px 0;
+  border-bottom: 1px solid #eef2f6;
+}
+
+.detail-row:last-child {
+  border-bottom: none;
+}
+
+.detail-row dt {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #52606d;
+}
+
+.detail-row dd {
+  margin: 2px 0 0;
+  overflow-wrap: anywhere;
 }
