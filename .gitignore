@@ -27,3 +27,6 @@ ml/models/
 .idea/
 .DS_Store
 Thumbs.db
+
+# Built P3 report (regenerate with docs/reports/p3/build.ps1)
+docs/reports/**/*.pdf
