@@ -21,11 +21,14 @@ Every endpoint that returns services uses this shape:
   "phone": "807-555-0100",
   "website": "https://example.org",
   "eligibility": "Open to everyone",
-  "last_updated": "2026-10-26T12:00:00Z"
+  "last_updated": "2026-10-26T12:00:00Z",
+  "distance_km": 2.91
 }
 ```
 
 `description`, `hours`, `phone`, `website` and `eligibility` can be `null`. The UI shows "Not available" for these (US-04).
+
+`distance_km` (US-06) is the straight-line distance in kilometres, rounded to 2 decimals, from the location sent with the request. It is `null` when no location was sent.
 
 ## Endpoints
 
@@ -37,8 +40,26 @@ Every endpoint that returns services uses this shape:
 | GET | `/api/search?q=<text>` | US-03 | Services whose name, category or description match `q`; `[]` if none |
 | GET | `/api/services/{id}` | US-04 | One service, or `404 {"detail": "Service not found"}` |
 
+### Location (US-06)
+
+`/api/services`, `/api/search` and `/api/services/{id}` accept these optional query parameters:
+
+| Parameter | Meaning |
+|---|---|
+| `lat`, `lng` | The user's position (WGS 84). Must be sent together. `lat` −90 to 90, `lng` −180 to 180 |
+| `max_km` | Only services within this many km (more than 0, at most 100). Needs `lat` and `lng`. Ignored by `/api/services/{id}`, so a details page always opens |
+
+With a location, every service has `distance_km` and lists are sorted **nearest first** (ties by name, then id). Without one, the responses are exactly as in Sprint 1.
+
+```
+GET /api/search?q=food%20bank&lat=48.3809&lng=-89.2477&max_km=5
+```
+
+In the frontend, pass `{ lat, lng, maxKm }` as the last argument of `getServicesByCategory`, `searchServices` or `getService` in `api/client.js`.
+
 ### Errors
 
+- `lat` without `lng` (or the reverse), out-of-range values, `max_km` without a location, or `max_km` outside 0–100 → `422`
 - Missing, empty, or whitespace-only `q` on `/api/search` → `422`
 - Unknown service id → `404 {"detail": "Service not found"}`
 - Non-integer service id → `422`

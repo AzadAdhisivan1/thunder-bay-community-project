@@ -13,6 +13,72 @@ Thunder Link helps people in Thunder Bay find community services (food banks, sh
 
 ---
 
+## Who is doing what: Sprint 2 (P3)
+
+**Sprint goal:** reach about 50% of the backlog with **US-06** (location and distance), **US-07** (plain-language search) and **US-08** (ranked results). That's 21 points, taking us from 18/73 to 39/73. The TA checks working, tested features in the lab, so every story needs tests and must run with `docker compose up`.
+
+Same workflow as Sprint 1: one branch per task, a PR into `main`, CI green, and **one approval from a teammate** before merging. Commit from one GitHub account only.
+
+### Azad: US-06 backend ✅ done
+- [x] PostGIS `location` column on `services` (generated from lat/lng) with a GiST index: migration `0002`
+- [x] `lat`, `lng`, `max_km` on `/api/services`, `/api/search`, `/api/services/{id}`; `distance_km` on every service; nearest first
+- [x] `api/client.js`: every call takes an optional `{ lat, lng, maxKm }` as its last argument
+- [x] 40 distance tests (SQLite) + 8 PostGIS tests; CI now starts a PostGIS database
+- [x] Contract in [`docs/api.md`](docs/api.md#location-us-06), design in [`docs/architecture.md`](docs/architecture.md#sprint-2-changes-p3)
+- [ ] P3 report PDF ([`docs/reports/p3/`](docs/reports/p3/)): each of you, send me your status and test counts when your PR is merged
+
+**Your files:** `backend/app/crud/distance.py`, `backend/app/geo.py`, `backend/app/routers/location.py`, `backend/alembic/`, `backend/tests/test_distance.py`, `backend/tests/test_postgis.py`, `frontend/src/api/client.js`, `.github/`, `docs/architecture.md`, `docs/reports/`
+
+### Dhara: US-06 frontend (location UI)
+The backend is ready: try `http://localhost:8000/api/services?lat=48.3809&lng=-89.2477` after pulling `main` and running `docker compose up -d --build`.
+- [ ] "Use my location" button on the results page: `navigator.geolocation.getCurrentPosition`
+- [ ] Pass the position to the API: `searchServices(q, { lat, lng })`, `getServicesByCategory(slug, { lat, lng })`, `getService(id, { lat, lng })`
+- [ ] Show `distance_km` on each `ServiceCard` and on the details page, e.g. "2.9 km away" (one decimal)
+- [ ] "You are here" marker on `ResultsMap`, included when the map fits its bounds
+- [ ] Location denied or unavailable: show a short message and keep the normal (name-ordered) results
+- [ ] Optional: a radius choice (2 / 5 / 10 km) sent as `maxKm`
+- [ ] Vitest tests: mock `navigator.geolocation` (success and denied) and the API client
+- [ ] Update [`docs/backlog.md`](docs/backlog.md) statuses as stories finish (US-01 to US-05 are Done)
+
+**Acceptance criteria (US-06):** with location allowed, every result shows its distance and the list is nearest first; with location denied, results still show (without distances) and the user sees why; the map shows the user's position. *(Check the exact wording against P1.)*
+
+**Your files:** `frontend/src/components/ResultsMap.jsx`, a new `frontend/src/components/LocationButton.jsx` (or a `useLocation` hook), `docs/backlog.md`. Coordinate with Kamakshi before editing `ServiceCard.jsx` or the pages.
+
+### Santhosh: US-07 plain-language search (timeboxed)
+- [ ] `backend/app/nlp/parser.py`: turn a sentence into `{category, keywords}`. Start simple: a keyword → category map (e.g. "hungry", "meal", "groceries" → Food; "bed", "sleep" → Shelter) plus stop-word removal. No ML needed for Sprint 2.
+- [ ] `GET /api/search/smart?q=<sentence>` (also accepts `lat`, `lng`): parse, then run the normal search with the extracted words, filtered to the detected category
+- [ ] **Fallback (NFR-04):** if parsing finds nothing or raises an error, return the plain keyword search results for the original text. Never return a 500
+- [ ] Response includes what was understood, so the UI can say "Showing Food services for: tonight, meal"
+- [ ] pytest: example sentences per category, fallback on gibberish, fallback when the parser raises, works with a location
+- [ ] Update [`docs/api.md`](docs/api.md) and [`docs/testing-plan.md`](docs/testing-plan.md) (add the Sprint 2 tests)
+
+**Acceptance criteria (US-07):** "I need food tonight" returns Food services; a sentence the parser can't understand still returns keyword results; search never fails because of the NLP step. *(Check against P1.)*
+
+**Your files:** `backend/app/nlp/`, `backend/app/routers/search.py`, `backend/tests/test_nlp.py`, `docs/api.md`, `docs/testing-plan.md`. Reuse `search_query()` in `crud/search.py` and `with_distance()` in `crud/distance.py`.
+
+### Kamakshi: US-08 ranked results + plain-language search UI
+- [ ] `backend/app/nlp/ranking.py`: score each result, e.g. name match > category match > description match, minus a small amount per km when a location is given. Pure function with unit tests
+- [ ] Use the ranking for `/api/search` and `/api/search/smart` results (agree the hook-in point with Santhosh)
+- [ ] Frontend: a "Sort by: Best match / Nearest" choice on the results page (Nearest only when location is on)
+- [ ] Frontend: show the "understood as" line from US-07 above the results
+- [ ] Tests for the ranking function (pytest) and the sort control (Vitest)
+
+**Acceptance criteria (US-08):** for "food bank", services named "Food Bank" come before ones that only mention it in the description; with a location, of two equally good matches the nearer one comes first. *(Check against P1.)*
+
+**Your files:** `backend/app/nlp/ranking.py`, `backend/tests/test_ranking.py`, `frontend/src/pages/ResultsPage.jsx`, `frontend/src/components/`, `frontend/tests/`
+
+### Everyone
+- [ ] Review at least one teammate's PR each week (approve only after running it)
+- [ ] Run the PostGIS tests before opening a backend PR (see [Running the tests](#running-the-tests))
+- [ ] Be ready to demo your own story and explain its acceptance criteria and tests to the TA
+
+### Order of work
+1. **Now:** pull `main`. US-06 backend and the API client are merged, so Dhara can start right away. Santhosh starts the parser; Kamakshi starts the ranking function (pure Python, needs nothing else).
+2. **Middle:** Santhosh and Kamakshi agree how ranking plugs into `/api/search/smart`; Dhara's location feeds both.
+3. **End:** connect everything, check it in the browser on a phone-width window, send Azad your status for the P3 PDF.
+
+---
+
 ## Who is doing what: Sprint 1 (P2)
 
 Sprint goal (from P1 §7): `docker compose up` gives a working site with real Thunder Bay data where you can browse by category, search by keyword, see results on a map and open a details page. CI runs the tests on every pull request.
@@ -109,6 +175,14 @@ With the app running in Docker:
 docker compose exec backend pytest --cov=app
 docker compose exec frontend npm test
 ```
+
+The PostGIS tests (`tests/test_postgis.py`) are skipped unless you point them at a database. They use a separate `thunderlink_test` database that they create and rebuild, so your app data is safe:
+
+```bash
+docker compose exec -e TEST_DATABASE_URL=postgresql+psycopg://thunderlink:thunderlink@db:5432/thunderlink_test backend pytest
+```
+
+CI always runs them.
 
 Without Docker, you need Python 3.12 and Node 20:
 

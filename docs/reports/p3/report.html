@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>P3 Thunder Link</title>
+<style>
+  @page { size: Letter; margin: 0.6in 0.65in 0.6in 0.65in; }
+  :root { --ink:#1b2430; --muted:#5b6675; --line:#d5dbe3; --accent:#1f5fa8; --done:#1e7a3c; --prog:#a86a00; --todo:#6b7280; --bg-soft:#f4f7fb; }
+  * { box-sizing: border-box; }
+  body { font-family: "Segoe UI", Arial, sans-serif; color: var(--ink); font-size: 10pt; line-height: 1.38; margin: 0; }
+  .run { display:flex; justify-content:space-between; color: var(--muted); font-size: 8.5pt; border-bottom: 1px solid var(--line); padding-bottom: 4px; margin-bottom: 10px; }
+  h1 { font-size: 17pt; margin: 2px 0 0; }
+  .sub { color: var(--muted); margin: 0 0 12px; font-size: 10.5pt; }
+  h2 { font-size: 12pt; color: var(--accent); margin: 16px 0 6px; border-bottom: 1px solid var(--line); padding-bottom: 3px; break-after: avoid; }
+  h3 { font-size: 10.5pt; margin: 10px 0 4px; break-after: avoid; }
+  p { margin: 4px 0 6px; }
+  table { width: 100%; border-collapse: collapse; margin: 4px 0 8px; font-size: 9pt; break-inside: auto; }
+  th, td { border: 1px solid var(--line); padding: 4px 6px; vertical-align: top; text-align: left; }
+  th { background: var(--bg-soft); font-weight: 600; }
+  tr { break-inside: avoid; }
+  code { font-family: Consolas, monospace; font-size: 8.6pt; background: var(--bg-soft); padding: 0 3px; border-radius: 3px; }
+  ul { margin: 3px 0 6px; padding-left: 18px; }
+  li { margin: 2px 0; }
+  .s { font-weight: 600; white-space: nowrap; }
+  .done { color: var(--done); } .prog { color: var(--prog); } .todo { color: var(--todo); }
+  .kpis { display:flex; gap: 8px; margin: 6px 0 8px; }
+  .kpi { flex:1; border:1px solid var(--line); border-radius:6px; padding:6px 8px; background: var(--bg-soft); }
+  .kpi b { display:block; font-size: 14pt; }
+  .kpi span { color: var(--muted); font-size: 8.5pt; }
+  .fig { border:1px solid var(--line); border-radius:6px; padding:6px; margin: 6px 0; break-inside: avoid; }
+  .cap { color: var(--muted); font-size: 8.5pt; margin-top: 3px; }
+  pre { font-family: Consolas, monospace; font-size: 8pt; background: var(--bg-soft); border:1px solid var(--line); border-radius:4px; padding:6px 8px; white-space: pre-wrap; margin: 4px 0 8px; break-inside: avoid; }
+  .two { display:flex; gap: 12px; } .two > div { flex: 1; }
+</style>
+</head>
+<body>
+
+<div class="run"><span>Thunder Link · COMP 3415 P3: Working Software Increment</span><span>Sprint 2 · <!--DATE-->November 7, 2026<!--/DATE--></span></div>
+<h1>P3: Working Software Increment</h1>
+<p class="sub">Thunder Bay Smart Community Services Locator</p>
+
+<h2>1. Team information</h2>
+<table>
+  <tr><th style="width:19%">Team</th><td colspan="2"><b>Thunder Link</b> &nbsp;·&nbsp; COMP 3415 Software Engineering</td></tr>
+  <tr><th>Member</th><th style="width:36%">Sprint 2 responsibility</th><th>Contact</th></tr>
+  <tr><td>Azad Adhisivan</td><td>US-06 backend: PostGIS location column, distance API; CI, architecture, README</td><td>aadhisi1@lakeheadu.ca · GitHub: AzadAdhisivan1</td></tr>
+  <tr><td>Dhara Satishbhai Patel</td><td>US-06 frontend: “Use my location”, distances on cards and map; backlog</td><td>dpate303@lakeheadu.ca · GitHub: DHARASATISHBHAIPATEL</td></tr>
+  <tr><td>Santhosh Sai Allada</td><td>US-07 plain-language search with keyword fallback; testing plan</td><td>sallada1@lakeheadu.ca · GitHub: salladaa</td></tr>
+  <tr><td>Kamakshi Borgohain</td><td>US-08 ranked results; plain-language search UI</td><td>kborgoh1@lakeheadu.ca · GitHub: kborgoh1-bebot</td></tr>
+</table>
+
+<h2>2. GitHub repository</h2>
+<p><b>https://github.com/AzadAdhisivan1/thunder-bay-community-project</b> (public, branch <code>main</code>). Run with <code>docker compose up -d --build</code>, load data with <code>docker compose exec backend python -m seed.seed</code>, open <code>http://localhost:5173</code>. The README lists every Sprint 2 task, its owner and its files.</p>
+
+<!--PROGRESS-->
+<div class="kpis">
+  <div class="kpi"><b>18 / 73</b><span>story points done (25%) at end of Sprint 1</span></div>
+  <div class="kpi"><b>39 / 73</b><span>Sprint 2 target (53%): US-06, US-07, US-08</span></div>
+  <div class="kpi"><b>144</b><span>automated tests passing (108 backend incl. 8 PostGIS, 36 frontend), up from 92</span></div>
+</div>
+<!--/PROGRESS-->
+
+<h2>3. Updated product backlog</h2>
+<table>
+  <tr><th style="width:7%">ID</th><th style="width:24%">User story</th><th style="width:9%">Priority</th><th style="width:5%">Pts</th><th style="width:8%">Sprint</th><th style="width:12%">Status</th><th>Notes</th></tr>
+  <tr><td>US-01</td><td>Load initial service data</td><td>Blocker</td><td>5</td><td>1</td><td class="s done">Done</td><td>50 listings, 10 categories; seed safe to re-run</td></tr>
+  <tr><td>US-02</td><td>Browse by category</td><td>Blocker</td><td>3</td><td>1</td><td class="s done">Done</td><td>Only non-empty categories shown</td></tr>
+  <tr><td>US-03</td><td>Keyword search</td><td>Blocker</td><td>3</td><td>1</td><td class="s done">Done</td><td>Fallback for US-07</td></tr>
+  <tr><td>US-04</td><td>View service details</td><td>Critical</td><td>2</td><td>1</td><td class="s done">Done</td><td>Missing fields show “Not available”</td></tr>
+  <tr><td>US-05</td><td>See results on a map</td><td>Critical</td><td>5</td><td>1</td><td class="s done">Done</td><td>Leaflet + OpenStreetMap</td></tr>
+  <!--US06--><tr><td>US-06</td><td>Use my location for distance</td><td>Critical</td><td>5</td><td>2</td><td class="s prog">In progress</td><td>Backend + API client <b>done and tested</b> (Azad); location UI in progress (Dhara)</td></tr><!--/US06-->
+  <tr><td>US-07</td><td>Plain-language search</td><td>Critical</td><td>8</td><td>2</td><td class="s prog">In progress</td><td>Timeboxed; falls back to keyword search (NFR-04)</td></tr>
+  <tr><td>US-08</td><td>Ranked results</td><td>Major</td><td>8</td><td>2</td><td class="s prog">In progress</td><td>Relevance + distance; builds on US-06 and US-07</td></tr>
+  <tr><td>US-09</td><td>Register and log in</td><td>Major</td><td>5</td><td>3</td><td class="s todo">To Do</td><td>Needed by US-10 to US-15</td></tr>
+  <tr><td>US-10</td><td>Admin manages listings</td><td>Major</td><td>5</td><td>3</td><td class="s todo">To Do</td><td>Needs admin role (US-09)</td></tr>
+  <tr><td>US-12</td><td>Set preferences</td><td>Minor</td><td>3</td><td>–</td><td class="s todo">To Do</td><td></td></tr>
+  <tr><td>US-11</td><td>Save favourites</td><td>Minor</td><td>3</td><td>–</td><td class="s todo">To Do</td><td></td></tr>
+  <tr><td>US-13</td><td>Personalized recommendations</td><td>Minor</td><td>8</td><td>–</td><td class="s todo">Deferred</td><td>Needs preferences and search history</td></tr>
+  <tr><td>US-14</td><td>ML category suggestion</td><td>Minor</td><td>8</td><td>–</td><td class="s todo">Deferred</td><td>Needs more labelled listings (50 now)</td></tr>
+  <tr><td>US-15</td><td>Admin manages users</td><td>Trivial</td><td>2</td><td>–</td><td class="s todo">To Do</td><td></td></tr>
+</table>
+<p>Priorities and estimates are unchanged from P2. Sprint 2 takes the next three stories in priority order (21 points, slightly above our 18-point capacity, so US-08 is the stretch goal). US-13 and US-14 are deferred: both need data we don't collect yet.</p>
+
+<h2>4. Updated design artifacts</h2>
+<div class="fig">
+<svg viewBox="0 0 700 190" width="100%" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial" font-size="10">
+  <defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#5b6675"/></marker></defs>
+  <rect x="5" y="70" width="80" height="40" rx="5" fill="#f4f7fb" stroke="#5b6675"/><text x="45" y="88" text-anchor="middle">Browser</text><text x="45" y="101" text-anchor="middle" fill="#5b6675" font-size="8.5">+ geolocation</text>
+  <rect x="110" y="20" width="170" height="150" rx="6" fill="none" stroke="#1f5fa8"/><text x="195" y="35" text-anchor="middle" fill="#1f5fa8" font-weight="600">Frontend (React) :5173</text>
+  <rect x="122" y="45" width="146" height="24" rx="4" fill="#fff" stroke="#5b6675"/><text x="195" y="61" text-anchor="middle">Pages + ResultsMap</text>
+  <rect x="122" y="77" width="146" height="24" rx="4" fill="#fff" stroke="#a86a00" stroke-dasharray="4 3"/><text x="195" y="93" text-anchor="middle">“Use my location” (US-06)</text>
+  <rect x="122" y="109" width="146" height="24" rx="4" fill="#fff" stroke="#5b6675"/><text x="195" y="125" text-anchor="middle">api/client.js (+ lat/lng)</text>
+  <rect x="305" y="20" width="230" height="150" rx="6" fill="none" stroke="#1f5fa8"/><text x="420" y="35" text-anchor="middle" fill="#1f5fa8" font-weight="600">Backend (FastAPI) :8000</text>
+  <rect x="317" y="45" width="100" height="24" rx="4" fill="#fff" stroke="#5b6675"/><text x="367" y="61" text-anchor="middle">Routers</text>
+  <rect x="425" y="45" width="100" height="24" rx="4" fill="#fff" stroke="#a86a00" stroke-dasharray="4 3"/><text x="475" y="61" text-anchor="middle">NLP parser (US-07)</text>
+  <rect x="425" y="77" width="100" height="24" rx="4" fill="#fff" stroke="#a86a00" stroke-dasharray="4 3"/><text x="475" y="93" text-anchor="middle">Ranking (US-08)</text>
+  <rect x="317" y="77" width="100" height="24" rx="4" fill="#fff" stroke="#5b6675"/><text x="367" y="93" text-anchor="middle">CRUD queries</text>
+  <rect x="317" y="109" width="208" height="24" rx="4" fill="#fff" stroke="#a86a00" stroke-dasharray="4 3"/><text x="421" y="125" text-anchor="middle">Distance query: ST_Distance (US-06)</text>
+  <rect x="560" y="55" width="135" height="70" rx="6" fill="#f4f7fb" stroke="#5b6675"/><text x="627" y="74" text-anchor="middle" font-weight="600">PostgreSQL + PostGIS</text><text x="627" y="90" text-anchor="middle" font-size="8.5">services.location</text><text x="627" y="102" text-anchor="middle" font-size="8.5">geography(Point) + GiST</text>
+  <line x1="85" y1="90" x2="108" y2="90" stroke="#5b6675" marker-end="url(#a)"/>
+  <line x1="280" y1="121" x2="303" y2="121" stroke="#5b6675" marker-end="url(#a)"/>
+  <line x1="535" y1="100" x2="558" y2="100" stroke="#5b6675" marker-end="url(#a)"/>
+  <rect x="317" y="145" width="12" height="8" fill="none" stroke="#a86a00" stroke-dasharray="3 2"/><text x="334" y="153" fill="#5b6675" font-size="8.5">dashed = new or changed in Sprint 2</text>
+</svg>
+<div class="cap">Figure 1: Architecture after Sprint 2. Layers are unchanged from P2; dashed boxes are the Sprint 2 additions.</div>
+</div>
+<ul>
+  <li><b>PostGIS location column.</b> Migration <code>0002</code> adds <code>services.location</code>, a <code>geography(Point, 4326)</code> column generated by the database from latitude and longitude, with a GiST index. The seed script and CSV stay unchanged and the column can never drift from the coordinates.</li>
+  <li><b>Distance in the API.</b> <code>/api/services</code>, <code>/api/search</code> and <code>/api/services/{id}</code> accept optional <code>lat</code> and <code>lng</code>. Each result gets <code>distance_km</code> and lists are sorted nearest first; an optional <code>max_km</code> limits the radius. Without a location the API behaves exactly as in P2, so the site still works when location is denied.</li>
+  <li><b>Same layering.</b> Distance is computed in the CRUD layer (PostGIS on PostgreSQL, the same formula in Python for the SQLite unit tests). Ranking (US-08) and the plain-language parser (US-07) will sit between routers and CRUD and reuse the keyword search as their fallback.</li>
+  <li><b>Contract first.</b> <code>docs/api.md</code> documents the new parameters so the frontend and backend can again be built in parallel.</li>
+</ul>
+
+<h2>5. Iteration review</h2>
+<!--REVIEW-->
+<p><b>Planned:</b> US-06 (location and distance), US-07 (plain-language search) and US-08 (ranked results), 21 points, taking the project from 25% to 53% of the backlog.</p>
+<p><b>Completed so far:</b> the US-06 backend is merged. Migration 0002 adds the generated PostGIS location column. All three service endpoints accept a location and return <code>distance_km</code> nearest first, with an optional radius, and the frontend API client accepts the location. On the 50 real listings, distances from City Hall range from 0.13 to 10.59 km, 12 services lie within 2 km, and the request takes about 17 ms. Testing grew from 92 to 144 tests: 40 distance tests, 4 API-client tests, and 8 PostGIS tests that run against a real database in CI, closing the gap P2 noted that SQLite could not test PostGIS. While adding the migration we found and fixed a latent risk: Alembic's autogenerate would have dropped the PostGIS image's own tables. Sprint 2 tasks for the other stories are assigned in the README with owners, files and acceptance criteria.</p>
+<pre>$ docker compose exec -e TEST_DATABASE_URL=... backend pytest     $ docker compose exec frontend npm test
+tests/test_distance.py   40 passed   tests/test_postgis.py  8 passed     Test Files  8 passed (8)
+tests/test_endpoints.py  29 passed   tests/test_seed*.py   28 passed          Tests  36 passed (36)
+108 passed                           backend coverage: 98% app code (220/224), 94% seed script</pre>
+<p><b>Challenges:</b> Setting up the Windows development environment took longer than planned. WSL and Docker Desktop would not start until damaged Windows components were repaired and virtualization was enabled. This delayed the start of Sprint 2 work.</p>
+<p><b>Next:</b> finish the US-06 location UI, then US-07 and US-08 behind green CI; require one approval plus passing CI before merging into <code>main</code>; attempt a first hosted deployment.</p>
+<!--/REVIEW-->
+
+</body>
+</html>

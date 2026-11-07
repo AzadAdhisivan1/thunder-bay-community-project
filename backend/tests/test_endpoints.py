@@ -58,12 +58,13 @@ def test_service_details_preserve_full_contract(client, make_service):
     data = response.json()
     assert set(data) == {
         "id", "name", "category", "description", "address", "latitude", "longitude",
-        "hours", "phone", "website", "eligibility", "last_updated",
+        "hours", "phone", "website", "eligibility", "last_updated", "distance_km",
     }
-    for field in set(data) - {"category", "last_updated"}:
+    for field in set(data) - {"category", "last_updated", "distance_km"}:
         assert data[field] == getattr(service, field)
     assert data["category"] == {"id": service.category.id, "name": "Food", "slug": "food"}
     assert data["last_updated"]
+    assert data["distance_km"] is None  # no location given (US-06)
 
 
 def test_service_nullable_fields_remain_null(client, make_service):
