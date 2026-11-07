@@ -12,6 +12,23 @@ jobs:
     defaults:
       run:
         working-directory: backend
+    # Real PostgreSQL + PostGIS for tests/test_postgis.py (US-06). The other tests use SQLite.
+    services:
+      db:
+        image: postgis/postgis:16-3.4
+        env:
+          POSTGRES_USER: thunderlink
+          POSTGRES_PASSWORD: thunderlink
+          POSTGRES_DB: thunderlink
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U thunderlink"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      TEST_DATABASE_URL: postgresql+psycopg://thunderlink:thunderlink@localhost:5432/thunderlink_test
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -20,7 +37,7 @@ jobs:
           cache: pip
           cache-dependency-path: backend/requirements*.txt
       - run: pip install -r requirements-dev.txt
-      - run: pytest --cov=app --cov-report=term-missing
+      - run: pytest --cov=app --cov=seed --cov-report=term-missing
 
   frontend:
     name: Frontend tests (Vitest) and build
